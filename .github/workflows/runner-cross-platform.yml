@@ -57,6 +57,19 @@ jobs:
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
             patchelf
+      - name: Prepare bundled runner for desktop checks
+        if: matrix.target != 'aarch64-unknown-linux-gnu'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo build --locked -p loomex-cli --target "${{ matrix.target }}"
+          mkdir -p crates/loomex-tauri/binaries
+          if [[ "${RUNNER_OS}" == "Windows" ]]; then
+            cp "target/${{ matrix.target }}/debug/loomex.exe" crates/loomex-tauri/binaries/loomex.exe
+          else
+            cp "target/${{ matrix.target }}/debug/loomex" crates/loomex-tauri/binaries/loomex
+            chmod 755 crates/loomex-tauri/binaries/loomex
+          fi
       - name: Check workspace
         run: ${{ matrix.check }}
       - name: Test native target
