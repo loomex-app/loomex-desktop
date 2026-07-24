@@ -3002,6 +3002,15 @@ fn bundled_runner_binary_path() -> CoreResult<PathBuf> {
             if candidate.exists() {
                 return Ok(candidate);
             }
+            let resources = parent.join("../Resources");
+            for resource_candidate in [
+                resources.join(executable_name),
+                resources.join("binaries").join(executable_name),
+            ] {
+                if resource_candidate.exists() {
+                    return Ok(resource_candidate);
+                }
+            }
         }
     }
     Ok(PathBuf::from(executable_name))

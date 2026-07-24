@@ -1,5 +1,6 @@
 .DS_Store
 .pytest_cache/
 target/
+crates/loomex-tauri/binaries/
 __pycache__/
 *.pyc
