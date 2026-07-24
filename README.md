@@ -33,3 +33,12 @@ curl -fsSL \
 The current build is unsigned, so macOS may require Finder's **Open** action
 once to approve it in Gatekeeper. Developer ID signing and notarization should
 be added before broad production distribution.
+
+## Default server profile
+
+The desktop CLI uses the production server by default:
+
+```toml
+[profiles.default]
+serverUrl = "https://loomex.app"
+```
